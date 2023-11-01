@@ -1,0 +1,170 @@
+From 8dfaa8fa7c97cd1372a0a233b83fbc7945447b75 Mon Sep 17 00:00:00 2001
+From: Uli Heilmeier <uh@heilmeier.eu>
+Date: Fri, 05 Oct 2018 08:54:55 +0200
+Subject: [PATCH] *shark: Update help and manpage for name resolving
+
+Add 'v' option for VLAN ID resolving and get rid of
+deprecated 'C' option.
+
+Bug: 14826
+Change-Id: I63104f4a465d251048693ad02882ea7eb2c4d926
+Reviewed-on: https://code.wireshark.org/review/30029
+Petri-Dish: Anders Broman <a.broman58@gmail.com>
+Tested-by: Petri Dish Buildbot
+Reviewed-by: Anders Broman <a.broman58@gmail.com>
+---
+
+diff --git a/doc/rawshark.pod b/doc/rawshark.pod
+index be6caee..8f10445 100644
+--- a/doc/rawshark.pod
++++ b/doc/rawshark.pod
+@@ -183,6 +183,8 @@
+ 
+ B<d> to enable resolution from captured DNS packets
+ 
++B<v> to enable VLAN IDs to names resolution
++
+ =item -o  E<lt>preferenceE<gt>:E<lt>valueE<gt>
+ 
+ Set a preference value, overriding the default value and any value read
+diff --git a/doc/tshark.pod b/doc/tshark.pod
+index 263332b..8aff736 100644
+--- a/doc/tshark.pod
++++ b/doc/tshark.pod
+@@ -676,6 +676,8 @@
+ 
+ B<t> to enable transport-layer port number resolution
+ 
++B<v> to enable VLAN IDs to names resolution
++
+ =item -o  E<lt>preferenceE<gt>:E<lt>valueE<gt>
+ 
+ Set a preference value, overriding the default value and any value read
+diff --git a/doc/wireshark.pod.template b/doc/wireshark.pod.template
+index a25ea65..c45581f 100644
+--- a/doc/wireshark.pod.template
++++ b/doc/wireshark.pod.template
+@@ -499,6 +499,8 @@
+ 
+ B<d> to enable resolution from captured DNS packets
+ 
++B<v> to enable VLAN IDs to names resolution
++
+ =item -o  E<lt>preference/recent settingE<gt>
+ 
+ Set a preference or recent value, overriding the default value and any value
+diff --git a/docbook/wsug_src/WSUG_chapter_customize.asciidoc b/docbook/wsug_src/WSUG_chapter_customize.asciidoc
+index 67afafc..a7411c4 100644
+--- a/docbook/wsug_src/WSUG_chapter_customize.asciidoc
++++ b/docbook/wsug_src/WSUG_chapter_customize.asciidoc
+@@ -76,7 +76,7 @@
+ Processing:
+   -R <read filter>         packet filter in Wireshark display filter syntax
+   -n                       disable all name resolutions (def: all enabled)
+-  -N <name resolve flags>  enable specific name resolution(s): "mnNtCd"
++  -N <name resolve flags>  enable specific name resolution(s): "mnNtdv"
+   -d <layer_type>==<selector>,<decode_as_protocol> ...
+                            "Decode As”, see the man page for details
+                            Example: tcp.port==8888,http
+@@ -295,6 +295,7 @@
+ resolution, `n` to enable network address resolution, and `t` to enable
+ transport-layer port number resolution. This overrides `-n` if both `-N` and
+ `-n` are present. The letter `d` enables resolution from captured DNS packets.
++The letter `v` enables resolution from VLAN IDs to names.
+ 
+ -o <preference or recent settings>::
+ 
+diff --git a/docbook/wsug_src/rawshark-h.txt b/docbook/wsug_src/rawshark-h.txt
+index 39aeec0..7de64ec 100644
+--- a/docbook/wsug_src/rawshark-h.txt
++++ b/docbook/wsug_src/rawshark-h.txt
+@@ -13,7 +13,7 @@
+   -F <field>               field to display
+   -m                       virtual memory limit, in bytes
+   -n                       disable all name resolution (def: all enabled)
+-  -N <name resolve flags>  enable specific name resolution(s): "mnNtd"
++  -N <name resolve flags>  enable specific name resolution(s): "mnNtdv"
+   -p                       use the system's packet header format
+                            (which may have 64-bit timestamps)
+   -R <read filter>         packet filter in Wireshark display filter syntax
+diff --git a/docbook/wsug_src/tshark-h.txt b/docbook/wsug_src/tshark-h.txt
+index 9eaccda..ffe12b9 100644
+--- a/docbook/wsug_src/tshark-h.txt
++++ b/docbook/wsug_src/tshark-h.txt
+@@ -38,7 +38,7 @@
+   -Y <display filter>      packet displaY filter in Wireshark display filter
+                            syntax
+   -n                       disable all name resolutions (def: all enabled)
+-  -N <name resolve flags>  enable specific name resolution(s): "mnNtCd"
++  -N <name resolve flags>  enable specific name resolution(s): "mnNtdv"
+   -d <layer_type>==<selector>,<decode_as_protocol> ...
+                            "Decode As", see the man page for details
+                            Example: tcp.port==8888,http
+diff --git a/epan/prefs.c b/epan/prefs.c
+index 34c05d3..d732eb2 100644
+--- a/epan/prefs.c
++++ b/epan/prefs.c
+@@ -4932,10 +4932,6 @@
+         case 't':
+             name_resolve->transport_name = TRUE;
+             break;
+-        case 'C':
+-            /* DEPRECATED */
+-            /* name_resolve->concurrent_dns */
+-            break;
+         case 'd':
+             name_resolve->dns_pkt_addr_resolution = TRUE;
+             break;
+diff --git a/rawshark.c b/rawshark.c
+index 61875c1..29cb2ba 100644
+--- a/rawshark.c
++++ b/rawshark.c
+@@ -190,7 +190,7 @@
+     fprintf(output, "  -m                       virtual memory limit, in bytes\n");
+ #endif
+     fprintf(output, "  -n                       disable all name resolution (def: all enabled)\n");
+-    fprintf(output, "  -N <name resolve flags>  enable specific name resolution(s): \"mnNtd\"\n");
++    fprintf(output, "  -N <name resolve flags>  enable specific name resolution(s): \"mnNtdv\"\n");
+     fprintf(output, "  -p                       use the system's packet header format\n");
+     fprintf(output, "                           (which may have 64-bit timestamps)\n");
+     fprintf(output, "  -R <read filter>         packet filter in Wireshark display filter syntax\n");
+diff --git a/tshark.c b/tshark.c
+index a152c2b..2d84153 100644
+--- a/tshark.c
++++ b/tshark.c
+@@ -370,7 +370,7 @@
+   fprintf(output, "  -Y <display filter>      packet displaY filter in Wireshark display filter\n");
+   fprintf(output, "                           syntax\n");
+   fprintf(output, "  -n                       disable all name resolutions (def: all enabled)\n");
+-  fprintf(output, "  -N <name resolve flags>  enable specific name resolution(s): \"mnNtCd\"\n");
++  fprintf(output, "  -N <name resolve flags>  enable specific name resolution(s): \"mnNtdv\"\n");
+   fprintf(output, "  -d %s ...\n", DECODE_AS_ARG_TEMPLATE);
+   fprintf(output, "                           \"Decode As\", see the man page for details\n");
+   fprintf(output, "                           Example: tcp.port==8888,http\n");
+diff --git a/ui/commandline.c b/ui/commandline.c
+index 6a26be3..7c0768a 100644
+--- a/ui/commandline.c
++++ b/ui/commandline.c
+@@ -123,7 +123,7 @@
+     fprintf(output, "Processing:\n");
+     fprintf(output, "  -R <read filter>         packet filter in Wireshark display filter syntax\n");
+     fprintf(output, "  -n                       disable all name resolutions (def: all enabled)\n");
+-    fprintf(output, "  -N <name resolve flags>  enable specific name resolution(s): \"mnNtd\"\n");
++    fprintf(output, "  -N <name resolve flags>  enable specific name resolution(s): \"mnNtdv\"\n");
+     fprintf(output, "  -d %s ...\n", DECODE_AS_ARG_TEMPLATE);
+     fprintf(output, "                           \"Decode As\", see the man page for details\n");
+     fprintf(output, "                           Example: tcp.port==8888,http\n");
+diff --git a/ui/dissect_opts.c b/ui/dissect_opts.c
+index 77e7b58..c6aa771 100644
+--- a/ui/dissect_opts.c
++++ b/ui/dissect_opts.c
+@@ -79,7 +79,8 @@
+                             "\t'n' to enable network address resolution\n"
+                             "\t'N' to enable using external resolvers (e.g., DNS)\n"
+                             "\t    for network address resolution\n"
+-                            "\t't' to enable transport-layer port number resolution");
++                            "\t't' to enable transport-layer port number resolution\n"
++                            "\t'v' to enable VLAN IDs to names resolution");
+             return FALSE;
+         }
+         break;
