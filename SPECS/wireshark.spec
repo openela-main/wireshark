@@ -6,7 +6,7 @@
 Summary:	Network traffic analyzer
 Name:		wireshark
 Version:	2.6.2
-Release:	15%{?dist}
+Release:	17%{?dist}
 Epoch:          1
 License:	GPL+
 Url:		http://www.wireshark.org/
@@ -63,6 +63,10 @@ Patch27:	wireshark-0027-ibm-smc.patch
 
 #Change in libssh header files forces a different technique on finding definitons
 Patch28:	wireshark-0028-find-libssh.patch
+Patch29:	wireshark-0029-cve-2023-2858.patch
+Patch30:	wireshark-0030-cve-2023-2856.patch
+Patch31:	wireshark-0031-cve-2023-0666.patch
+Patch32:	wireshark-0032-cve-2023-2952.patch
 
 #install tshark together with wireshark GUI
 Requires:	%{name}-cli = %{epoch}:%{version}-%{release}
@@ -311,6 +315,14 @@ getent group usbmon >/dev/null || groupadd -r usbmon
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Fri Jun 30 2023 Michal Ruprich <mruprich@redhat.com> - 1:2.6.2-17
+- Resolves: #2211412 - XRA dissector infinite loop
+
+* Wed Jun 14 2023 Michal Ruprich <mruprich@redhat.com> - 1:2.6.2-16
+- Resolves: #2210866 - VMS TCPIPtrace file parser crash
+- Resolves: #2210867 - NetScaler file parser crash
+- Resolves: #2210869 - RTPS dissector crash
+
 * Wed Aug 24 2022 Michal Ruprich <mruprich@redhat.com> - 1:2.6.2-15
 - Resolves: #2119126 - Wireshark source rpm fails to build due to looking for incorrect libssh header files
 
