@@ -1,0 +1,114 @@
+diff --git a/tshark.c b/tshark.c
+index 00c28db781..e02b61b663 100644
+--- a/tshark.c
++++ b/tshark.c
+@@ -1977,10 +1977,10 @@ real_main(int argc, char *argv[])
+       /* Activate the export PDU tap */
+       comment = g_strdup_printf("Dump of PDUs from %s", cf_name);
+       err = exp_pdu_open(&exp_pdu_tap_data, exp_fd, comment);
++      g_free(comment);
+       if (err != 0) {
+           cfile_dump_open_failure_message("TShark", exp_pdu_filename, err,
+                                           WTAP_FILE_TYPE_SUBTYPE_PCAPNG);
+-          g_free(comment);
+           exit_status = INVALID_EXPORT;
+           goto clean_exit;
+       }
+diff --git a/ui/export_pdu_ui_utils.c b/ui/export_pdu_ui_utils.c
+index a567a61991..c9e40b7a24 100644
+--- a/ui/export_pdu_ui_utils.c
++++ b/ui/export_pdu_ui_utils.c
+@@ -43,8 +43,8 @@ exp_pdu_file_open(exp_pdu_t *exp_pdu_tap_data)
+ 
+     comment = g_strdup_printf("Dump of PDUs from %s", cfile.filename);
+     err = exp_pdu_open(exp_pdu_tap_data, import_file_fd, comment);
++    g_free(comment);
+     if (err != 0) {
+-        g_free(comment);
+         cfile_dump_open_failure_alert_box(capfile_name ? capfile_name : "temporary file",
+                                           err, WTAP_FILE_TYPE_SUBTYPE_PCAPNG);
+         goto end;
+diff --git a/ui/tap_export_pdu.c b/ui/tap_export_pdu.c
+index 25232f0452..d3302a5aca 100644
+--- a/ui/tap_export_pdu.c
++++ b/ui/tap_export_pdu.c
+@@ -82,7 +82,7 @@ export_pdu_packet(void *tapdata, packet_info *pinfo, epan_dissect_t *edt, const
+ }
+ 
+ int
+-exp_pdu_open(exp_pdu_t *exp_pdu_tap_data, int fd, char *comment)
++exp_pdu_open(exp_pdu_t *exp_pdu_tap_data, int fd, const char *comment)
+ {
+ 
+     int   err;
+@@ -103,7 +103,6 @@ exp_pdu_open(exp_pdu_t *exp_pdu_tap_data, int fd, char *comment)
+ 
+     /* options */
+     wtap_block_add_string_option(shb_hdr, OPT_COMMENT, comment, strlen(comment));
+-    g_free(comment);
+ 
+     /*
+      * UTF-8 string containing the name of the operating system used to create
+diff --git a/ui/tap_export_pdu.h b/ui/tap_export_pdu.h
+index ea5c4077e1..9ae2dea65f 100644
+--- a/ui/tap_export_pdu.h
++++ b/ui/tap_export_pdu.h
+@@ -41,7 +41,7 @@ char *exp_pdu_pre_open(const char *tap_name, const char *filter,
+ *
+ * @return 0 on success or a wtap error code.
+ */
+-int exp_pdu_open(exp_pdu_t *data, int fd, char *comment);
++int exp_pdu_open(exp_pdu_t *data, int fd, const char *comment);
+ 
+ /* Stops the PDUs export. */
+ int exp_pdu_close(exp_pdu_t *exp_pdu_tap_data);
+diff --git a/ui/cli/tap-wspstat.c b/ui/cli/tap-wspstat.c
+index 22862cdaf8..fd6f3ad427 100644
+--- a/ui/cli/tap-wspstat.c
++++ b/ui/cli/tap-wspstat.c
+@@ -252,9 +252,9 @@ wspstat_init(const char *opt_arg, void *userdata _U_)
+ 		/* error, we failed to attach to the tap. clean up */
+ 		g_free(sp->pdu_stats);
+ 		g_free(sp->filter);
+-		g_free(sp);
+ 		g_hash_table_foreach( sp->hash, (GHFunc) wsp_free_hash_table, NULL ) ;
+ 		g_hash_table_destroy( sp->hash );
++		g_free(sp);
+ 		fprintf(stderr, "tshark: Couldn't register wsp,stat tap: %s\n",
+ 				error_string->str);
+ 		g_string_free(error_string, TRUE);
+diff --git a/epan/dissectors/packet-isobus-vt.c b/epan/dissectors/packet-isobus-vt.c
+index 1f9fa98..79f1c1f 100644
+--- a/epan/dissectors/packet-isobus-vt.c
++++ b/epan/dissectors/packet-isobus-vt.c
+@@ -1546,16 +1546,8 @@ dissect_vt(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, enum vt_directio
+             }
+             else
+             {
+-                if(status == 0)
+-                {
+-                    col_append_fstr(pinfo->cinfo, COL_INFO, "Status of Auxiliary Input %s was successfully changed to enabled",
+-                        get_object_id_string(auxiliary_input_object_id));
+-                }
+-                else
+-                {
+-                    col_append_fstr(pinfo->cinfo, COL_INFO, "Status of Auxiliary Input %s was successfully changed to enabled",
+-                        get_object_id_string(auxiliary_input_object_id));
+-                }
++                col_append_fstr(pinfo->cinfo, COL_INFO, "Status of Auxiliary Input %s was successfully changed to enabled",
++                    get_object_id_string(auxiliary_input_object_id));
+             }
+         }
+     }
+diff --git a/epan/dfilter/dfilter.c b/epan/dfilter/dfilter.c
+index a975f84..3e440b3 100644
+--- a/epan/dfilter/dfilter.c
++++ b/epan/dfilter/dfilter.c
+@@ -221,6 +221,7 @@ dfilter_compile(const gchar *text, dfilter_t **dfp, gchar **err_msg)
+ 	}
+ 
+ 	if ( !( expanded_text = dfilter_macro_apply(text, err_msg) ) ) {
++		*dfp = NULL;
+ 		return FALSE;
+ 	}
+ 
