@@ -6,7 +6,7 @@
 Summary:	Network traffic analyzer
 Name:		wireshark
 Version:	3.4.10
-Release:	4%{?dist}
+Release:	6%{?dist}
 Epoch:		1
 License:	GPL+
 Url:		http://www.wireshark.org/
@@ -30,6 +30,12 @@ Patch0007:	wireshark-0007-cmakelists.patch
 Patch0009:	wireshark-0009-smc-support.patch
 Patch0010:	wireshark-0010-fips-ripemd160.patch
 Patch0011:	wireshark-0011-cve-2022-3190.patch
+Patch0012:	wireshark-0012-cve-2023-0668.patch
+Patch0013:	wireshark-0013-cve-2023-0666.patch
+Patch0014:	wireshark-0014-cve-2023-2858.patch
+Patch0015:	wireshark-0015-cve-2023-2856.patch
+Patch0016:	wireshark-0016-cve-2023-2855.patch
+Patch0017:	wireshark-0017-cve-2023-2952.patch
 
 #install tshark together with wireshark GUI
 Requires:	%{name}-cli = %{epoch}:%{version}-%{release}
@@ -277,6 +283,16 @@ fi
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Mon Jun 19 2023 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-6
+- Resolves: #2211413 - XRA dissector infinite loop
+
+* Wed Jun 07 2023 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-5
+- Resolves: #2210864 - Candump log file parser crash
+  Resolves: #2210865 - VMS TCPIPtrace file parser crash
+  Resolves: #2210868 - NetScaler file parser crash
+  Resolves: #2210870 - RTPS dissector crash
+  Resolves: #2210871 - IEEE C37.118 Synchrophasor dissector crash
+
 * Fri Jan 20 2023 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-4
 - Resolves: #2152064 - CVE-2022-3190 wireshark: f5ethtrailer Infinite loop in legacy style dissector
 
