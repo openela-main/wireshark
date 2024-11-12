@@ -41,13 +41,12 @@ index 2f9d2cc..b18e47f 100644
      int sync_pipe[2];                       /* pipe used to send messages from child to parent */
      int data_pipe[2];                       /* pipe used to send data from child to parent */
  #endif
-@@ -1003,8 +1008,11 @@ sync_pipe_open_command(char** argv, int *data_read_fd,
+@@ -1003,8 +1008,10 @@ sync_pipe_open_command(char** argv, int *data_read_fd,
          ws_close(sync_pipe[PIPE_READ]);
          ws_close(sync_pipe[PIPE_WRITE]);
          execv(argv[0], argv);
 -        g_snprintf(errmsg, sizeof errmsg, "Couldn't run %s in child process: %s",
 -                   argv[0], g_strerror(errno));
-+        execv(argv[0], (gpointer)argv);
 +	if (errno == EPERM || errno == EACCES)
 +		securitymsg = "\nAre you a member of the 'wireshark' group? Try running\n'usermod -a -G wireshark _your_username_' as root.";
 +        g_snprintf(errmsg, sizeof errmsg, "Couldn't run %s in child process: %s%s",

@@ -6,7 +6,7 @@
 Summary:	Network traffic analyzer
 Name:		wireshark
 Version:	3.4.10
-Release:	6%{?dist}
+Release:	7%{?dist}
 Epoch:		1
 License:	GPL+
 Url:		http://www.wireshark.org/
@@ -36,6 +36,7 @@ Patch0014:	wireshark-0014-cve-2023-2858.patch
 Patch0015:	wireshark-0015-cve-2023-2856.patch
 Patch0016:	wireshark-0016-cve-2023-2855.patch
 Patch0017:	wireshark-0017-cve-2023-2952.patch
+Patch0018:	wireshark-0018-sync-pipe-stderr-messages.patch
 
 #install tshark together with wireshark GUI
 Requires:	%{name}-cli = %{epoch}:%{version}-%{release}
@@ -283,6 +284,9 @@ fi
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Jul 17 2024 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-7
+- Resolves: RHEL-14596 - Wireshark hangs if dumpcap returned unexpected messages in sync pipe.
+
 * Mon Jun 19 2023 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-6
 - Resolves: #2211413 - XRA dissector infinite loop
 
