@@ -6,7 +6,7 @@
 Summary:	Network traffic analyzer
 Name:		wireshark
 Version:	3.4.10
-Release:	7%{?dist}
+Release:	8%{?dist}
 Epoch:		1
 License:	GPL+
 Url:		http://www.wireshark.org/
@@ -37,6 +37,7 @@ Patch0015:	wireshark-0015-cve-2023-2856.patch
 Patch0016:	wireshark-0016-cve-2023-2855.patch
 Patch0017:	wireshark-0017-cve-2023-2952.patch
 Patch0018:	wireshark-0018-sync-pipe-stderr-messages.patch
+Patch0019:	wireshark-0019-nfs-over-tls.patch
 
 #install tshark together with wireshark GUI
 Requires:	%{name}-cli = %{epoch}:%{version}-%{release}
@@ -284,6 +285,9 @@ fi
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Mon Jul 07 2025 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-8
+- Resolves: RHEL-55554 - NFS packets decrypted via TLS are displayed as RPC
+
 * Wed Jul 17 2024 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-7
 - Resolves: RHEL-14596 - Wireshark hangs if dumpcap returned unexpected messages in sync pipe.
 
