@@ -6,7 +6,7 @@
 Summary:	Network traffic analyzer
 Name:		wireshark
 Version:	4.4.2
-Release:	3%{?dist}
+Release:	4%{?dist}
 Epoch:		1
 License:	BSD-1-Clause AND BSD-2-Clause AND BSD-3-Clause AND MIT AND GPL-2.0-or-later AND LGPL-2.0-or-later AND Zlib AND ISC AND (BSD-3-Clause OR GPL-2.0-only) AND (GPL-2.0-or-later AND Zlib)
 Url:		http://www.wireshark.org/
@@ -74,8 +74,8 @@ BuildRequires:	asciidoctor
 %if %{with_maxminddb} && 0%{?fedora}
 BuildRequires:	libmaxminddb-devel
 %endif
-%if %{with_lua} && 0%{?fedora}
-BuildRequires:	compat-lua-devel
+%if %{with_lua}
+BuildRequires:	lua-devel
 %endif
 Buildrequires: git-core
 Buildrequires: python3-devel
@@ -126,7 +126,7 @@ and plugins.
 %cmake -G "Unix Makefiles" \
   -DDISABLE_WERROR=ON \
   -DBUILD_wireshark=ON \
-%if %{with_lua} && 0%{?fedora}
+%if %{with_lua}
   -DENABLE_LUA=ON \
 %else
   -DENABLE_LUA=OFF \
@@ -281,6 +281,9 @@ fi
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Tue Jun 10 2025 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-4
+- Resolves: RHEL-91194 - RFE - Wireshark with LUA support
+
 * Thu Jun 05 2025 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-3
 - Resolves: RHEL-80274 - Increasing NVR due to a build error
 
