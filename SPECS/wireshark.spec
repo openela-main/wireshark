@@ -6,7 +6,7 @@
 Summary:	Network traffic analyzer
 Name:		wireshark
 Version:	3.4.10
-Release:	8%{?dist}
+Release:	8%{?dist}.1
 Epoch:		1
 License:	GPL+
 Url:		http://www.wireshark.org/
@@ -38,6 +38,7 @@ Patch0016:	wireshark-0016-cve-2023-2855.patch
 Patch0017:	wireshark-0017-cve-2023-2952.patch
 Patch0018:	wireshark-0018-sync-pipe-stderr-messages.patch
 Patch0019:	wireshark-0019-nfs-over-tls.patch
+Patch0020:	wireshark-0020-cve-2025-13499.patch
 
 #install tshark together with wireshark GUI
 Requires:	%{name}-cli = %{epoch}:%{version}-%{release}
@@ -285,6 +286,9 @@ fi
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Dec 10 2025 Michal Ruprich <michalruprich@gmail.com> - 1:3.4.10-8.1
+- Resolves: RHEL-130438 - Access of Uninitialized Pointer in Wireshark
+
 * Mon Jul 07 2025 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-8
 - Resolves: RHEL-55554 - NFS packets decrypted via TLS are displayed as RPC
 
