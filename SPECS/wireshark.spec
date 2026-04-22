@@ -6,7 +6,7 @@
 Summary:	Network traffic analyzer
 Name:		wireshark
 Version:	4.4.2
-Release:	4%{?dist}.2
+Release:	4%{?dist}.4
 Epoch:		1
 License:	BSD-1-Clause AND BSD-2-Clause AND BSD-3-Clause AND MIT AND GPL-2.0-or-later AND LGPL-2.0-or-later AND Zlib AND ISC AND (BSD-3-Clause OR GPL-2.0-only) AND (GPL-2.0-or-later AND Zlib)
 Url:		http://www.wireshark.org/
@@ -31,6 +31,8 @@ Patch8:   wireshark-0008-pkgconfig.patch
 Patch9:   wireshark-0009-cve-2025-1492.patch
 Patch10:  wireshark-0010-cve-2025-13499.patch
 Patch11:  wireshark-0011-cve-2025-9817.patch
+Patch12:  wireshark-0012-cve-2026-3201.patch
+Patch13:  wireshark-0013-cve-2026-3203.patch
 
 #install tshark together with wireshark GUI
 Requires:	%{name}-cli = %{epoch}:%{version}-%{release}
@@ -283,6 +285,12 @@ fi
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Tue Apr 07 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-4.4
+- Resolves: RHEL-152921 - CVE-2026-3203 Buffer Over-read
+
+* Sat Apr 04 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-4.3
+- Resolves: RHEL-152912 - CVE-2026-3201 Improperly Controlled Sequential Memory Allocation
+
 * Sun Jan 25 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-4.2
 - Resolves: RHEL-136916 - NULL Pointer Dereference in Wireshark (CVE-2025-9817)
 
