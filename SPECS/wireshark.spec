@@ -6,7 +6,7 @@
 Summary:	Network traffic analyzer
 Name:		wireshark
 Version:	4.4.2
-Release:	4%{?dist}.4
+Release:	10%{?dist}
 Epoch:		1
 License:	BSD-1-Clause AND BSD-2-Clause AND BSD-3-Clause AND MIT AND GPL-2.0-or-later AND LGPL-2.0-or-later AND Zlib AND ISC AND (BSD-3-Clause OR GPL-2.0-only) AND (GPL-2.0-or-later AND Zlib)
 Url:		http://www.wireshark.org/
@@ -33,6 +33,10 @@ Patch10:  wireshark-0010-cve-2025-13499.patch
 Patch11:  wireshark-0011-cve-2025-9817.patch
 Patch12:  wireshark-0012-cve-2026-3201.patch
 Patch13:  wireshark-0013-cve-2026-3203.patch
+# Upstream fix: https://gitlab.com/wireshark/wireshark/-/commit/45eb952
+Patch14:  wireshark-0014-cve-2026-5405.patch
+# Upstream fix: https://gitlab.com/wireshark/wireshark/-/commit/9c45888
+Patch15:  wireshark-0015-cve-2026-5656.patch
 
 #install tshark together with wireshark GUI
 Requires:	%{name}-cli = %{epoch}:%{version}-%{release}
@@ -285,17 +289,23 @@ fi
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
-* Tue Apr 07 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-4.4
-- Resolves: RHEL-152921 - CVE-2026-3203 Buffer Over-read
+* Wed May 13 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10
+- Resolves: RHEL-173221 - CVE-2026-5656 Improper Limitation of a Pathname to a Restricted Directory
 
-* Sat Apr 04 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-4.3
-- Resolves: RHEL-152912 - CVE-2026-3201 Improperly Controlled Sequential Memory Allocation
+* Wed May 13 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-9
+- Resolves: RHEL-173218 - CVE-2026-5405 Heap-based Buffer Overflow
 
-* Sun Jan 25 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-4.2
-- Resolves: RHEL-136916 - NULL Pointer Dereference in Wireshark (CVE-2025-9817)
+* Thu Apr 23 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-8
+- Resolves: RHEL-152922 - CVE-2026-3203 Buffer Over-read
 
-* Mon Dec 08 2025 Michal Ruprich <michalruprich@gmail.com> - 1:4.4.2-4.1
-- Resolves: RHEL-130425 - Access of Uninitialized Pointer in Wireshark
+* Thu Apr 23 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-7
+- Resolves: RHEL-152913 - CVE-2026-3201 Improperly Controlled Sequential Memory Allocation
+
+* Sun Jan 25 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-6
+- Resolves: RHEL-136919 - NULL Pointer Dereference in Wireshark (CVE-2025-9817)
+
+* Mon Jan 19 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-5
+- Resolves: RHEL-130427 - Access of Uninitialized Pointer in Wireshark
 
 * Tue Jun 10 2025 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-4
 - Resolves: RHEL-91194 - RFE - Wireshark with LUA support
