@@ -6,7 +6,7 @@
 Summary:	Network traffic analyzer
 Name:		wireshark
 Version:	3.4.10
-Release:	8%{?dist}.1
+Release:	9%{?dist}.5
 Epoch:		1
 License:	GPL+
 Url:		http://www.wireshark.org/
@@ -39,6 +39,16 @@ Patch0017:	wireshark-0017-cve-2023-2952.patch
 Patch0018:	wireshark-0018-sync-pipe-stderr-messages.patch
 Patch0019:	wireshark-0019-nfs-over-tls.patch
 Patch0020:	wireshark-0020-cve-2025-13499.patch
+# https://gitlab.com/wireshark/wireshark/-/commit/a44c8dc0
+Patch0021:	wireshark-0021-cve-2026-76880.patch
+# Based on https://gitlab.com/wireshark/wireshark/-/commit/360bdc60
+Patch0022:	wireshark-0022-cve-2026-76886.patch
+# https://gitlab.com/wireshark/wireshark/-/commit/affa11c6
+Patch0023:	wireshark-0023-cve-2026-76919.patch
+# https://gitlab.com/wireshark/wireshark/-/commit/73467571
+Patch0024:	wireshark-0024-cve-2026-76927.patch
+# https://gitlab.com/wireshark/wireshark/-/commit/aa7372d1
+Patch0025:	wireshark-0025-cve-2026-95387.patch
 
 #install tshark together with wireshark GUI
 Requires:	%{name}-cli = %{epoch}:%{version}-%{release}
@@ -286,8 +296,28 @@ fi
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
-* Wed Dec 10 2025 Michal Ruprich <michalruprich@gmail.com> - 1:3.4.10-8.1
-- Resolves: RHEL-130438 - Access of Uninitialized Pointer in Wireshark
+* Wed Sep 30 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-10.4
+- Fix DoS via heap-based buffer overflow in SPDY dissector (CVE-2026-95387)
+- Resolves: RHEL-272330
+
+* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-9.4
+- Fix DoS vulnerability in H.245 protocol dissector (CVE-2026-76927)
+- Resolves: RHEL-257656
+
+* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-9.3
+- Fix DoS vulnerability in ESS protocol dissector (CVE-2026-76919)
+- Resolves: RHEL-257615
+
+* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-9.2
+- Fix DoS via C12.22 protocol dissector crash (CVE-2026-76886)
+- Resolves: RHEL-247390
+
+* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-9.1
+- Fix DoS via RRC protocol dissector out-of-bounds write (CVE-2026-76880)
+- Resolves: RHEL-245617
+
+* Mon Jan 19 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-9
+- Resolves: RHEL-130440 - Access of Uninitialized Pointer in Wireshark
 
 * Mon Jul 07 2025 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-8
 - Resolves: RHEL-55554 - NFS packets decrypted via TLS are displayed as RPC
