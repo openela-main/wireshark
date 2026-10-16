@@ -6,7 +6,7 @@
 Summary:	Network traffic analyzer
 Name:		wireshark
 Version:	2.6.2
-Release:	17%{?dist}
+Release:	21%{?dist}
 Epoch:          1
 License:	GPL+
 Url:		http://www.wireshark.org/
@@ -67,6 +67,15 @@ Patch29:	wireshark-0029-cve-2023-2858.patch
 Patch30:	wireshark-0030-cve-2023-2856.patch
 Patch31:	wireshark-0031-cve-2023-0666.patch
 Patch32:	wireshark-0032-cve-2023-2952.patch
+
+# https://gitlab.com/wireshark/wireshark/-/commit/32ecb4ce
+Patch33:  wireshark-0033-cve-2026-76880.patch
+# https://gitlab.com/wireshark/wireshark/-/commit/360bdc60
+Patch34:  wireshark-0034-cve-2026-76886.patch
+# https://gitlab.com/wireshark/wireshark/-/commit/affa11c6
+Patch35:  wireshark-0035-cve-2026-76919.patch
+# https://gitlab.com/wireshark/wireshark/-/commit/86df5f3b
+Patch36:  wireshark-0036-cve-2026-76927.patch
 
 #install tshark together with wireshark GUI
 Requires:	%{name}-cli = %{epoch}:%{version}-%{release}
@@ -315,6 +324,22 @@ getent group usbmon >/dev/null || groupadd -r usbmon
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Fri Sep 25 2026 Michal Ruprich <mruprich@redhat.com> - 1:2.6.2-21
+- Fix DoS vulnerability in H.245 protocol dissector (CVE-2026-76927)
+- Resolves: RHEL-257649
+
+* Fri Sep 25 2026 Michal Ruprich <mruprich@redhat.com> - 1:2.6.2-20
+- Fix DoS vulnerability in ESS protocol dissector (CVE-2026-76919)
+- Resolves: RHEL-257614
+
+* Fri Sep 25 2026 Michal Ruprich <mruprich@redhat.com> - 1:2.6.2-19
+- Fix DoS via C12.22 protocol dissector crash (CVE-2026-76886)
+- Resolves: RHEL-247378
+
+* Fri Sep 25 2026 Michal Ruprich <mruprich@redhat.com> - 1:2.6.2-18
+- Fix DoS via RRC protocol dissector out-of-bounds write (CVE-2026-76880)
+- Resolves: RHEL-245613
+
 * Fri Jun 30 2023 Michal Ruprich <mruprich@redhat.com> - 1:2.6.2-17
 - Resolves: #2211412 - XRA dissector infinite loop
 
