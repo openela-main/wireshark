@@ -6,7 +6,7 @@
 Summary:	Network traffic analyzer
 Name:		wireshark
 Version:	4.4.2
-Release:	10%{?dist}
+Release:	10%{?dist}.8
 Epoch:		1
 License:	BSD-1-Clause AND BSD-2-Clause AND BSD-3-Clause AND MIT AND GPL-2.0-or-later AND LGPL-2.0-or-later AND Zlib AND ISC AND (BSD-3-Clause OR GPL-2.0-only) AND (GPL-2.0-or-later AND Zlib)
 Url:		http://www.wireshark.org/
@@ -37,6 +37,22 @@ Patch13:  wireshark-0013-cve-2026-3203.patch
 Patch14:  wireshark-0014-cve-2026-5405.patch
 # Upstream fix: https://gitlab.com/wireshark/wireshark/-/commit/9c45888
 Patch15:  wireshark-0015-cve-2026-5656.patch
+# Upstream fix: https://gitlab.com/wireshark/wireshark/-/commit/a7c97b29
+Patch16:  wireshark-0016-cve-2026-76879.patch
+# Upstream fix: https://gitlab.com/wireshark/wireshark/-/commit/3175cf0a
+Patch17:  wireshark-0017-cve-2026-76880.patch
+# Upstream fix: https://gitlab.com/wireshark/wireshark/-/commit/2a7ea466
+Patch18:  wireshark-0018-cve-2026-76886.patch
+# Upstream fix: https://gitlab.com/wireshark/wireshark/-/commit/ed129405
+Patch19:  wireshark-0019-cve-2026-76919.patch
+# Upstream fix: https://gitlab.com/wireshark/wireshark/-/commit/de13f9ff
+Patch20:  wireshark-0020-cve-2026-76927.patch
+# Upstream fix: https://gitlab.com/wireshark/wireshark/-/commit/ff9f1bc1
+Patch21:  wireshark-0021-cve-2026-76928.patch
+# Upstream fix: https://gitlab.com/wireshark/wireshark/-/commit/aa7372d1
+Patch22:  wireshark-0022-cve-2026-95387.patch
+# Upstream fix: https://gitlab.com/wireshark/wireshark/-/commit/8428d84d
+Patch23:  wireshark-0023-cve-2026-95389.patch
 
 #install tshark together with wireshark GUI
 Requires:	%{name}-cli = %{epoch}:%{version}-%{release}
@@ -289,6 +305,38 @@ fi
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Sep 30 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.8
+- Fix Heap-based Buffer Overflow in Wireshark (CVE-2026-95389)
+- Resolves: RHEL-272823
+
+* Wed Sep 30 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.7
+- Fix DoS via heap-based buffer overflow in SPDY dissector (CVE-2026-95387)
+- Resolves: RHEL-272323
+
+* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.6
+- Fix DoS via X.509IF protocol dissector crash (CVE-2026-76928)
+- Resolves: RHEL-248365
+
+* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.5
+- Fix DoS vulnerability in H.245 protocol dissector (CVE-2026-76927)
+- Resolves: RHEL-257643
+
+* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.4
+- Fix DoS vulnerability in ESS protocol dissector (CVE-2026-76919)
+- Resolves: RHEL-257617
+
+* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.3
+- Fix DoS via C12.22 protocol dissector crash (CVE-2026-76886)
+- Resolves: RHEL-247382
+
+* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.2
+- Fix DoS via RRC protocol dissector out-of-bounds write (CVE-2026-76880)
+- Resolves: RHEL-245610
+
+* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.1
+- Fix DoS via C12.22 protocol dissector crash (CVE-2026-76879)
+- Resolves: RHEL-248209
+
 * Wed May 13 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10
 - Resolves: RHEL-173221 - CVE-2026-5656 Improper Limitation of a Pathname to a Restricted Directory
 
