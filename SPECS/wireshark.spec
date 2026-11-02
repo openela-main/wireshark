@@ -6,7 +6,7 @@
 Summary:	Network traffic analyzer
 Name:		wireshark
 Version:	2.6.2
-Release:	21%{?dist}
+Release:	22%{?dist}
 Epoch:          1
 License:	GPL+
 Url:		http://www.wireshark.org/
@@ -76,6 +76,8 @@ Patch34:  wireshark-0034-cve-2026-76886.patch
 Patch35:  wireshark-0035-cve-2026-76919.patch
 # https://gitlab.com/wireshark/wireshark/-/commit/86df5f3b
 Patch36:  wireshark-0036-cve-2026-76927.patch
+# https://gitlab.com/wireshark/wireshark/-/commit/aa7372d1
+Patch37:  wireshark-0037-cve-2026-95387.patch
 
 #install tshark together with wireshark GUI
 Requires:	%{name}-cli = %{epoch}:%{version}-%{release}
@@ -324,6 +326,10 @@ getent group usbmon >/dev/null || groupadd -r usbmon
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Tue Sep 29 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 1:2.6.2-22
+- DoS via heap-based buffer overflow in SPDY dissector (CVE-2026-95387)
+- Resolves: RHEL-272318
+
 * Fri Sep 25 2026 Michal Ruprich <mruprich@redhat.com> - 1:2.6.2-21
 - Fix DoS vulnerability in H.245 protocol dissector (CVE-2026-76927)
 - Resolves: RHEL-257649
