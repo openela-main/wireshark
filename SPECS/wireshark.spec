@@ -6,7 +6,7 @@
 Summary:	Network traffic analyzer
 Name:		wireshark
 Version:	3.4.10
-Release:	9%{?dist}.5
+Release:	14%{?dist}
 Epoch:		1
 License:	GPL+
 Url:		http://www.wireshark.org/
@@ -296,25 +296,25 @@ fi
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
-* Wed Sep 30 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-10.4
+* Thu Oct 08 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-14
 - Fix DoS via heap-based buffer overflow in SPDY dissector (CVE-2026-95387)
-- Resolves: RHEL-272330
+- Resolves: RHEL-272315
 
-* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-9.4
+* Thu Oct 08 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-13
 - Fix DoS vulnerability in H.245 protocol dissector (CVE-2026-76927)
-- Resolves: RHEL-257656
+- Resolves: RHEL-257653
 
-* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-9.3
+* Thu Oct 08 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-12
 - Fix DoS vulnerability in ESS protocol dissector (CVE-2026-76919)
-- Resolves: RHEL-257615
+- Resolves: RHEL-257624
 
-* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-9.2
+* Thu Oct 08 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-11
 - Fix DoS via C12.22 protocol dissector crash (CVE-2026-76886)
-- Resolves: RHEL-247390
+- Resolves: RHEL-247393
 
-* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-9.1
+* Thu Oct 08 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-10
 - Fix DoS via RRC protocol dissector out-of-bounds write (CVE-2026-76880)
-- Resolves: RHEL-245617
+- Resolves: RHEL-245618
 
 * Mon Jan 19 2026 Michal Ruprich <mruprich@redhat.com> - 1:3.4.10-9
 - Resolves: RHEL-130440 - Access of Uninitialized Pointer in Wireshark
