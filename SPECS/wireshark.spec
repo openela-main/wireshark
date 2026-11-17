@@ -305,37 +305,37 @@ fi
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
-* Wed Sep 30 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.8
+* Thu Oct 08 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.8
 - Fix Heap-based Buffer Overflow in Wireshark (CVE-2026-95389)
-- Resolves: RHEL-272823
+- Resolves: RHEL-272825
 
-* Wed Sep 30 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.7
+* Thu Oct 08 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.7
 - Fix DoS via heap-based buffer overflow in SPDY dissector (CVE-2026-95387)
-- Resolves: RHEL-272323
+- Resolves: RHEL-272324
 
-* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.6
+* Thu Oct 08 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.6
 - Fix DoS via X.509IF protocol dissector crash (CVE-2026-76928)
-- Resolves: RHEL-248365
+- Resolves: RHEL-248363
 
-* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.5
+* Thu Oct 08 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.5
 - Fix DoS vulnerability in H.245 protocol dissector (CVE-2026-76927)
-- Resolves: RHEL-257643
+- Resolves: RHEL-257640
 
-* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.4
+* Thu Oct 08 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.4
 - Fix DoS vulnerability in ESS protocol dissector (CVE-2026-76919)
-- Resolves: RHEL-257617
+- Resolves: RHEL-257621
 
-* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.3
+* Thu Oct 08 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.3
 - Fix DoS via C12.22 protocol dissector crash (CVE-2026-76886)
-- Resolves: RHEL-247382
+- Resolves: RHEL-247386
 
-* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.2
+* Thu Oct 08 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.2
 - Fix DoS via RRC protocol dissector out-of-bounds write (CVE-2026-76880)
-- Resolves: RHEL-245610
+- Resolves: RHEL-245612
 
-* Tue Sep 29 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.1
+* Thu Oct 08 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10.1
 - Fix DoS via C12.22 protocol dissector crash (CVE-2026-76879)
-- Resolves: RHEL-248209
+- Resolves: RHEL-248211
 
 * Wed May 13 2026 Michal Ruprich <mruprich@redhat.com> - 1:4.4.2-10
 - Resolves: RHEL-173221 - CVE-2026-5656 Improper Limitation of a Pathname to a Restricted Directory
